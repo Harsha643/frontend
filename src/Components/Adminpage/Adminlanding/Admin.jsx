@@ -1,0 +1,25 @@
+import React from 'react'
+import "./Admin.css"
+import {useNavigate} from "react-router-dom"
+
+const Admin = () => {
+  const navigate=useNavigate()
+  return (
+    <>
+    <div className="container-Admin">
+    <h1 onClick={()=>navigate("/Newstudent")}>Admission</h1>
+      <h1 onClick={()=>navigate("/Studentsdata")}>Student Management</h1>
+      <h1 onClick={()=>navigate("/Newstaff")}>Staff Management</h1>
+      <h1 onClick={()=>navigate("/Events")}>Events</h1>
+      <h1>Time Table</h1>
+      <h1 onClick={()=>navigate("/Assign")}>Subject and class</h1>
+      <h1>Fee Management</h1>
+      <h1>Class Management</h1>
+      <h1  onClick={()=>navigate("/Gallery")}>Gallery</h1>
+    </div>
+    
+    </>
+  )
+}
+
+export default Admin
