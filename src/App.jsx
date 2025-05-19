@@ -8,9 +8,8 @@ import Events from "./Components/Adminpage/SchoolEvents/Events"
 import Assign from "./Components/Adminpage/SubjectAndClass/Assign"
 import Gallery from "./Components/Adminpage/Gallery/Gallery"
 import StudentDataFetching from "./Components/Adminpage/StudentManagement/StudentdataFetching"
-
-
-
+import StaffDataFetching from "./Components/Adminpage/StaffManagement/staffdata"
+import  "./Components/Adminpage/Newstudent/Newstudent.css"
 
 
 function App() {
@@ -22,6 +21,7 @@ function App() {
       <Route path="/" element={<Main1 />}/>
       <Route path="/Newstudent" element={<Newstudent />} />
       <Route path="/Studentsdata" element={<StudentDataFetching/>} />
+      <Route path="/Staffdata" element={<StaffDataFetching />} />
       <Route path="/Newstaff" element={<Newstaff />} />
       <Route path="/Events" element={<Events />} />
       <Route path="/Assign" element={<Assign />} />

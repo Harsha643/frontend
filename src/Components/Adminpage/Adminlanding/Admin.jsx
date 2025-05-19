@@ -9,7 +9,8 @@ const Admin = () => {
     <div className="container-Admin">
     <h1 onClick={()=>navigate("/Newstudent")}>Admission</h1>
       <h1 onClick={()=>navigate("/Studentsdata")}>Student Management</h1>
-      <h1 onClick={()=>navigate("/Newstaff")}>Staff Management</h1>
+      <h1 onClick={()=>navigate("/Newstaff")}>Staffadding </h1>
+      <h1 onClick={()=>navigate("/Staffdata")}>Staff management</h1>
       <h1 onClick={()=>navigate("/Events")}>Events</h1>
       <h1>Time Table</h1>
       <h1 onClick={()=>navigate("/Assign")}>Subject and class</h1>
