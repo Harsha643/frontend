@@ -1,204 +1,252 @@
-import React, { useState, useEffect } from "react";
-import "./Newstaff.css";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+import './Newstaff.css';
 
-const Newstaff = ({ staff, onSave, onCancel, isAddingNew }) => {
-  const [formData, setFormData] = useState({
-    teacherName: "",
-    email: "",
-    gender: "",
-    phoneNumber: "",
-    address: "",
-    designation: "",
-    aadharNumber: "",
-    experience: "",
-    joinedDate: "",
-    image: null
+const Newstaff = ({ existingStaff, onClose, refreshData }) => {
+    const navigate = useNavigate();
+  const [staff, setStaff] = useState({
+    teacherName: '',
+    gender: '',
+    email: '',
+    phoneNumber: '',
+    address: '',
+    image: null,
+    aadharNumber: '',
+    designation: '',
+    exprerence: '',
+    dateOfJoining: ''
   });
 
-  const [previewImage, setPreviewImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
-    if (staff) {
-      setFormData(staff);
-      if (staff.image) {
-        setPreviewImage(
-          staff.image instanceof File
-            ? URL.createObjectURL(staff.image)
-            : `http://localhost:4000/uploads/${staff.image}`
-        );
+    if (existingStaff) {
+      const formattedDate = existingStaff.dateOfJoining?.split('T')[0] || '';
+      setStaff(prev => ({
+        ...prev,
+        ...existingStaff,
+        dateOfJoining: formattedDate
+      }));
+      if (existingStaff.image) {
+        setImagePreview(existingStaff.image);
       }
     } else {
-      setFormData({
-        teacherName: "",
-        email: "",
-        gender: "",
-        phoneNumber: "",
-        address: "",
-        designation: "",
-        aadharNumber: "",
-        experience: "",
-        joinedDate: "",
-        image: null
+      setStaff({
+        teacherName: '',
+        gender: '',
+        email: '',
+        phoneNumber: '',
+        address: '',
+        image: null,
+        aadharNumber: '',
+        designation: '',
+        exprerence: '',
+        dateOfJoining: ''
       });
-      setPreviewImage(null);
+      setImagePreview(null);
     }
-  }, [staff]);
+  }, [existingStaff]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFormData(prev => ({ ...prev, image: file }));
-      setPreviewImage(URL.createObjectURL(file));
+    const { name, value, type, files } = e.target;
+    
+    if (type === 'file') {
+      const selectedFile = files[0];
+      setStaff({ ...staff, [name]: selectedFile });
+      
+      // Create image preview
+      if (selectedFile) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImagePreview(reader.result);
+        };
+        reader.readAsDataURL(selectedFile);
+      } else {
+        setImagePreview(null);
+      }
+    } else {
+      setStaff({ ...staff, [name]: value });
     }
   };
 
-  const handleSubmit = (e) => {
+    const handleCancel = () => {
+    navigate("/Admin"); // or the correct route for your Admin page
+  };
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(formData);
+    
+    const formData = new FormData();
+    for (const key in staff) {
+      if (staff[key] !== null) {
+        formData.append(key, staff[key]);
+      }
+    }
+
+    try {
+      const url = existingStaff 
+        ? `http://localhost:4000/admin/staff/${existingStaff.staffId}`
+        : 'http://localhost:4000/admin/staff';
+      
+      const method = existingStaff ? 'PUT' : 'POST';
+      
+      const response = await fetch(url, {
+        method,
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // refreshData();
+      // onClose();
+    } catch (error) {
+      console.error('Error saving staff:', error);
+      alert('Error saving staff. Please try again.');
+    }
   };
 
   return (
-    <div className="modal">
-      <form onSubmit={handleSubmit} className="staff-form">
-        <h3>{isAddingNew ? "Add New Staff" : "Update Staff"}</h3>
-
-        <div className="form-row">
-          <div className="form-group">
-            <label>Staff Name</label>
-            <input
-              type="text"
-              name="teacherName"
-              value={formData.teacherName}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
+    <div className="modal-overlay">
+      <div className='newstaff-modal'>
+        <div className="modal-header">
+          <h2>{existingStaff ? 'Update Staff' : 'Add New Staff'}</h2>
+          <button className="close-button" onClick={onClose}> {existingStaff?`x`:``} </button>
         </div>
-
-        <div className="form-row">
-          <div className="form-group">
-            <label>Gender</label>
-            <select
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label>Phone Number</label>
-            <input
-              type="tel"
-              name="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-              required
-              pattern="[0-9]{10}"
-            />
-          </div>
-        </div>
-
-        <div className="form-group">
-          <label>Address</label>
-          <textarea
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="form-row">
-          <div className="form-group">
-            <label>Aadhar Number</label>
-            <input
-              type="text"
-              name="aadharNumber"
-              value={formData.aadharNumber}
-              onChange={handleChange}
-              required
-              pattern="[0-9]{12}"
-            />
-          </div>
-          <div className="form-group">
-            <label>Designation</label>
-            <input
-              type="text"
-              name="designation"
-              value={formData.designation}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        </div>
-
-        <div className="form-row">
-          <div className="form-group">
-            <label>Experience (years)</label>
-            <input
-              type="text"
-              name="experience"
-              value={formData.experience}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Joined Date</label>
-            <input
-              type="date"
-              name="joinedDate"
-              value={formData.joinedDate}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        </div>
-
-        <div className="form-group">
-          <label>Staff Photo</label>
-          {previewImage && (
-            <div className="image-preview">
-              <img src={previewImage} alt="Staff Preview" />
+        
+        <form onSubmit={handleSubmit}>
+          <div className="form-grid">
+            <div className="input-group">
+              <label>Teacher Name</label>
+              <input 
+                type="text" 
+                name="teacherName" 
+                value={staff.teacherName} 
+                onChange={handleChange} 
+                required 
+              />
             </div>
-          )}
-          <input
-            type="file"
-            name="image"
-            onChange={handleImageChange}
-            accept="image/*"
-          />
-        </div>
 
-        <div className="form-buttons">
-          <button type="button" onClick={onCancel}>
-            Cancel
-          </button>
-          <button type="submit">
-            {isAddingNew ? "Add Staff" : "Update Staff"}
-          </button>
-        </div>
-      </form>
+            <div className="input-group">
+              <label>Email</label>
+              <input 
+                type="email" 
+                name="email" 
+                value={staff.email} 
+                onChange={handleChange} 
+                required 
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Phone Number</label>
+              <input 
+                type="text" 
+                name="phoneNumber" 
+                value={staff.phoneNumber} 
+                onChange={handleChange} 
+                required 
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Gender</label>
+              <select 
+                name="gender" 
+                value={staff.gender} 
+                onChange={handleChange} 
+                required
+              >
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div className="input-group">
+              <label>Address</label>
+              <input 
+                type="text" 
+                name="address" 
+                value={staff.address} 
+                onChange={handleChange} 
+                required 
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Aadhar Card Number</label>
+              <input 
+                type="number" 
+                name="aadharNumber" 
+                value={staff.aadharNumber} 
+                onChange={handleChange} 
+                required 
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Designation</label>
+              <input 
+                type="text" 
+                name="designation" 
+                value={staff.designation} 
+                onChange={handleChange} 
+                required 
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Experience (years)</label>
+              <input 
+                type="number" 
+                name="exprerence" 
+                value={staff.exprerence} 
+                onChange={handleChange} 
+                required 
+              />
+            </div>
+
+            <div className="input-group">
+              <label>Date of Joining</label>
+              <input 
+                type="date" 
+                name="dateOfJoining" 
+                value={staff.dateOfJoining} 
+                onChange={handleChange} 
+                required 
+              />
+            </div>
+
+            <div className="input-group image-upload">
+              <label>Staff Photo</label>
+              <input 
+                type="file" 
+                name="image" 
+                onChange={handleChange} 
+                accept="image/*" 
+              />
+              {imagePreview && (
+                <div className="image-preview">
+                  <img src={imagePreview} alt="Preview" />
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="form-actions">
+            <button type="submit" className="submit-button">
+              {existingStaff ? 'Update Staff' : 'Add Staff'}
+            </button>
+            <button type="button" className="cancel-button" onClick={existingStaff? onClose:handleCancel}  >
+             Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

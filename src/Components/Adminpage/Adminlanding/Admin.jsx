@@ -12,7 +12,7 @@ const Admin = () => {
       <h1 onClick={()=>navigate("/Newstaff")}>Staffadding </h1>
       <h1 onClick={()=>navigate("/Staffdata")}>Staff management</h1>
       <h1 onClick={()=>navigate("/Events")}>Events</h1>
-      <h1>Time Table</h1>
+      <h1 onClick={()=>navigate("/Timetable")}>Time Table</h1>
       <h1 onClick={()=>navigate("/Assign")}>Subject and class</h1>
       <h1>Fee Management</h1>
       <h1>Class Management</h1>

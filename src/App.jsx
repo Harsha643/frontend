@@ -9,9 +9,8 @@ import Assign from "./Components/Adminpage/SubjectAndClass/Assign"
 import Gallery from "./Components/Adminpage/Gallery/Gallery"
 import StudentDataFetching from "./Components/Adminpage/StudentManagement/StudentdataFetching"
 import StaffDataFetching from "./Components/Adminpage/StaffManagement/staffdata"
-import  "./Components/Adminpage/Newstudent/Newstudent.css"
-
-
+import Admin from "./Components/Adminpage/Adminlanding/Admin"
+import Timetable from "./Components/Adminpage/Time-Table/Timetable"
 function App() {
   
 
@@ -19,9 +18,11 @@ function App() {
     <>
      <Routes>
       <Route path="/" element={<Main1 />}/>
+      <Route path="/Admin" element={<Admin/>} />
       <Route path="/Newstudent" element={<Newstudent />} />
       <Route path="/Studentsdata" element={<StudentDataFetching/>} />
       <Route path="/Staffdata" element={<StaffDataFetching />} />
+      <Route path="/Timetable" element={<Timetable />} />
       <Route path="/Newstaff" element={<Newstaff />} />
       <Route path="/Events" element={<Events />} />
       <Route path="/Assign" element={<Assign />} />
