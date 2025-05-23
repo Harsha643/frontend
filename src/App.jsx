@@ -11,6 +11,7 @@ import StudentDataFetching from "./Components/Adminpage/StudentManagement/Studen
 import StaffDataFetching from "./Components/Adminpage/StaffManagement/staffdata"
 import Admin from "./Components/Adminpage/Adminlanding/Admin"
 import Timetable from "./Components/Adminpage/Time-Table/Timetable"
+import FeeManagement from "./Components/Adminpage/FeeManagement/FeeManagement"
 function App() {
   
 
@@ -23,6 +24,7 @@ function App() {
       <Route path="/Studentsdata" element={<StudentDataFetching/>} />
       <Route path="/Staffdata" element={<StaffDataFetching />} />
       <Route path="/Timetable" element={<Timetable />} />
+      <Route path="/feemanagement" element={<FeeManagement />} />
       <Route path="/Newstaff" element={<Newstaff />} />
       <Route path="/Events" element={<Events />} />
       <Route path="/Assign" element={<Assign />} />
