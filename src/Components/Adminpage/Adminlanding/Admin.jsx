@@ -15,7 +15,7 @@ const Admin = () => {
       <h1 onClick={()=>navigate("/Timetable")}>Time Table</h1>
       <h1 onClick={()=>navigate("/Assign")}>Subject and class</h1>
       <h1 onClick={()=>navigate("/feemanagement")}>Fee Management</h1>
-      <h1>Class Management</h1>
+      <h1 onClick={()=>{navigate("/ClassManagement")}}>Class Management</h1>
       <h1  onClick={()=>navigate("/Gallery")}>Gallery</h1>
     </div>
     

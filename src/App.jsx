@@ -12,6 +12,7 @@ import StaffDataFetching from "./Components/Adminpage/StaffManagement/staffdata"
 import Admin from "./Components/Adminpage/Adminlanding/Admin"
 import Timetable from "./Components/Adminpage/Time-Table/Timetable"
 import FeeManagement from "./Components/Adminpage/FeeManagement/FeeManagement"
+import ClassManagement from "./Components/Adminpage/ClassManagement/ClassManagement"
 function App() {
   
 
@@ -23,6 +24,7 @@ function App() {
       <Route path="/Newstudent" element={<Newstudent />} />
       <Route path="/Studentsdata" element={<StudentDataFetching/>} />
       <Route path="/Staffdata" element={<StaffDataFetching />} />
+      <Route path="/ClassManagement" element={<ClassManagement />} />
       <Route path="/Timetable" element={<Timetable />} />
       <Route path="/feemanagement" element={<FeeManagement />} />
       <Route path="/Newstaff" element={<Newstaff />} />

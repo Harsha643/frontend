@@ -9,7 +9,6 @@ const FeeManagement = () => {
         fetchStudents();
     }, []);
 
-    // Fetch student data from the server
     const fetchStudents = () => {
         fetch("http://localhost:4000/admin/students")
             .then((res) => res.json())
@@ -17,20 +16,19 @@ const FeeManagement = () => {
             .catch((err) => console.error("Error fetching students:", err));
     };
 
-    // Called when the Edit button is clicked
+ 
     const handleEditClick = (id, fees) => {
         setEditingId(id);
         setEditedFees({ ...fees });
     };
 
-    // Update local state when fee fields change
+ 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setEditedFees((prev) => ({ ...prev, [name]: Number(value) }));
     };
 
-    // Called when the Save button is clicked
-    // This computes the new total, sends the PUT request, then refreshes the list
+
     const handleSave = (id) => {
         const total =
             (editedFees.tuition ?? 0) +
@@ -44,8 +42,8 @@ const FeeManagement = () => {
             body: JSON.stringify(updatedFees),
         })
             .then(() => {
-                fetchStudents(); // refresh the list from the backend
-                setEditingId(null); // exit edit mode
+                fetchStudents(); 
+                setEditingId(null); 
             })
             .catch((err) => console.error("Error updating fees:", err));
     };
