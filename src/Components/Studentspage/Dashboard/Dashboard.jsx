@@ -27,8 +27,7 @@ const Dashboard = () => {
                 return <Notes />;
             case 'class':
                 return <h1>Class Page</h1>;
-            case 'homework':
-                return <h1>Homework Page</h1>;
+          
             case 'assignment':
                 return <Assignment />;
             case 'attendance':
@@ -61,10 +60,6 @@ const Dashboard = () => {
                     <button className="nav-button" onClick={() => setCurrentPage('notes')}>
                         <span className="icon"><img src='/notes.png'  width={"30px"}/></span>
                         <span>Notes</span>
-                    </button>
-                    <button className="nav-button" onClick={() => setCurrentPage('homework')}>
-                        <span className="icon"><img src='/homework.png'  width={"30px"}/></span>
-                        <span>Homework</span>
                     </button>
                     <button className="nav-button" onClick={() => setCurrentPage('assignment')}>
                         <span className="icon"><img src='/assignment.png'  width={"30px"}/></span>
