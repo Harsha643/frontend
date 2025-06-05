@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import "../DashboardStyles/notes.css"
-const Notes = () => {
+import "../DashboardStyles/notes.css";
+
+const Notes = ({ classData }) => {
     const [notes, setNotes] = useState([]);
+    const [filteredNotes, setFilteredNotes] = useState([]);
 
     useEffect(() => {
         // Fetch notes data from the server
@@ -10,25 +12,38 @@ const Notes = () => {
             .then(data => setNotes(data))
             .catch(error => console.error('Error fetching notes:', error));
     }, []);
-    // Render the notes list
+
+    useEffect(() => {
+        if (notes.length > 0 && classData) {
+            const classNotes = notes.filter(note => Number(note.classNumber) === Number(classData));
+            setFilteredNotes(classNotes);
+        } else {
+            setFilteredNotes([]);
+        }
+    }, [notes, classData]);
+
     return (
         <div className="notes-container">
             <h1>Notes</h1>
             <ul className="notes-list">
-                {notes.map((note, index) => (
-                    <li key={index} className="note-item">
-                        <h2>subject:{note.subject}</h2>
-                        <h2>{note.title}</h2>
-                        
-                        {note.link && (
-                            <a href={note.link} target="_blank" rel="noopener noreferrer">
-                                Download File
-                            </a>
-                        )}
-                    </li>
-                ))}
+                {filteredNotes.length > 0 ? (
+                    filteredNotes.map((note, index) => (
+                        <li key={index} className="note-item">
+                            <h2>Subject: {note.subject}</h2>
+                            <h3>{note.title}</h3>
+                            {note.link && (
+                                <a href={note.link} target="_blank" rel="noopener noreferrer">
+                                    Download File
+                                </a>
+                            )}
+                        </li>
+                    ))
+                ) : (
+                    <p>No notes available for this class.</p>
+                )}
             </ul>
         </div>
     );
-}
+};
+
 export default Notes;

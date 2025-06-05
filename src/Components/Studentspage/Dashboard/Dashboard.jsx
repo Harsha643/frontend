@@ -6,6 +6,8 @@ import Assignment from './assignment';
 import { useLocation } from "react-router-dom";
 import Header from './Header';
 import Timetable from "./Timetable"
+import Feedback from './feedback';
+import Attendence from './Attendence';
 
 const Dashboard = () => {
 
@@ -15,7 +17,7 @@ const Dashboard = () => {
     useEffect(() => {
     setStudentdata(student);
 }, [student]);
-// console.log("dfgjhkj",studentdata.presentClass)
+console.log("dfgjhkj",studentdata)
 
     const [currentPage, setCurrentPage] = useState('home');
 
@@ -24,18 +26,18 @@ const Dashboard = () => {
             case 'home':
                 return <Home />;
             case 'notes':
-                return <Notes />;
+                return <Notes studentdata={studentdata}/>;
             case 'class':
                 return <h1>Class Page</h1>;
           
             case 'assignment':
-                return <Assignment />;
+                return <Assignment  classData={studentdata.presentClass}/>;
             case 'attendance':
-                return <h1>Attendance Page</h1>;
+                return <Attendence rollNumber={studentdata.rollNumber} />;
             case 'timetable':
                 return <Timetable classData={studentdata.presentClass} />;
             case 'feedback':
-                return <h1>feeback</h1>;
+                return <Feedback rollNumber={studentdata.rollNumber}/>;
             default:
                 return <Home />;
         }
