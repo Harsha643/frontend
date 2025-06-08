@@ -8,6 +8,7 @@ import Header from './Header';
 import Timetable from "./Timetable"
 import Feedback from './feedback';
 import Attendence from './Attendence';
+import Classes from './classes';
 
 const Dashboard = () => {
 
@@ -28,7 +29,7 @@ console.log("dfgjhkj",studentdata)
             case 'notes':
                 return <Notes studentdata={studentdata}/>;
             case 'class':
-                return <h1>Class Page</h1>;
+                return <Classes classData={studentdata.presentClass} />
           
             case 'assignment':
                 return <Assignment  classData={studentdata.presentClass}/>;
