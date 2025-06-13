@@ -1,0 +1,91 @@
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+
+const StaffDashboard = () => {
+    const { state } = useLocation();
+    const staff = state?.staffdata;
+    const [staffdata, setStaffdata] = useState({});
+    const [currentPage, setCurrentPage] = useState('home');
+
+    const renderPage = () => {
+        switch (currentPage) {
+            case 'home':
+                return <h2>Home Page</h2>;
+            case 'notes':
+                return <h2>Notes Page</h2>;
+            case 'assignment':
+                return <h2>Assignments Page</h2>;
+            case 'timetable':
+                return <h2>Time Table Page</h2>;
+            case 'classes':
+                return <h2>Classes Page</h2>;
+            case 'attendance':
+                return <h2>Attendance Page</h2>;
+            case 'feedback':
+                return <h2>Feedback Page</h2>;
+            default:
+                return <h2>Home Page</h2>;
+        }
+    }
+
+    useEffect(() => {
+        setStaffdata(staff);
+    }, [staff]);
+
+    console.log("Staff Data:", staffdata);
+
+    return (
+          <div className="dashboard-container">
+            
+            <div className="dashboard-sidebar">
+                <div className="sidebar-header">
+                    <h2>Staff Portal</h2>
+                </div>
+                <nav className="sidebar-nav">
+                    <button className="nav-button" onClick={() => setCurrentPage('home')}>
+                        <span className="icon"><img src='/home1.png'  width={"30px"}/></span>
+                        <span>Home</span>
+                    </button>
+                    <button className="nav-button" onClick={() => setCurrentPage('classes')}>
+                        <span className="icon"><img src='/class.png'  width={"30px"}/></span>
+                        <span>Classes</span>
+                    </button>
+                    <button className="nav-button" onClick={() => setCurrentPage('notes')}>
+                        <span className="icon"><img src='/notes.png'  width={"30px"}/></span>
+                        <span>Notes</span>
+                    </button>
+                    <button className="nav-button" onClick={() => setCurrentPage('assignment')}>
+                        <span className="icon"><img src='/assignment.png'  width={"30px"}/></span>
+                        <span>Assignments</span>
+                    </button>
+                    <button className="nav-button" onClick={() => setCurrentPage('attendance')}>
+                        <span className="icon"><img src='/attendence.png'  width={"30px"}/></span>
+                        <span>Attendance</span>
+                    </button>
+                    <button className="nav-button" onClick={() => setCurrentPage('timetable')}>
+                        <span className="icon"><img src='/timetable.png'  width={"30px"}/></span>
+                        <span>Time Table</span>
+                    </button>
+                    <button className="nav-button" onClick={() => setCurrentPage('feedback')}>
+                        <span className="icon"><img src='/fb.png'  width={"30px"}/></span>
+                        <span>Feedback</span>
+                    </button>
+                </nav>
+                <div className="sidebar-footer">
+                    <button className="logout-button">
+                        <span className="icon">🚪</span>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+
+            <div className="dashboard-main">
+                    {/* <Header studentdata={studentdata}/> */}
+                <div className="dashboard-content">
+                    {renderPage()}
+                </div>
+            </div>
+        </div>
+    );
+}
+export default StaffDashboard;
