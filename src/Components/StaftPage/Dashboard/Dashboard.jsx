@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import Home from './Home';
 import Classes from './Classes';
+import Notes from './Notes';
+import Timetable from './Timetable';
 import '../DashboardStyles/Dashboard.css';
 
 const StaffDashboard = () => {
@@ -16,11 +18,11 @@ const StaffDashboard = () => {
             case 'home':
                 return <Home /> || <h2>Home Page</h2>;
             case 'notes':
-                return <h2>Notes Page</h2>;
+                return <Notes /> || <h2>Notes Page</h2>;
             case 'assignment':
                 return <h2>Assignments Page</h2>;
             case 'timetable':
-                return <h2>Time Table Page</h2>;
+                return <Timetable /> || <h2>Time Table Page</h2>;
             case 'classes':
                 return <Classes /> || <h2>Classes Page</h2>;
             case 'attendance':
@@ -62,10 +64,7 @@ const StaffDashboard = () => {
                         <span className="icon"><img src='/assignment.png'  width={"30px"}/></span>
                         <span>Assignments</span>
                     </button>
-                    <button className="nav-button" onClick={() => setCurrentPage('attendance')}>
-                        <span className="icon"><img src='/attendence.png'  width={"30px"}/></span>
-                        <span>Attendance</span>
-                    </button>
+                  
                     <button className="nav-button" onClick={() => setCurrentPage('timetable')}>
                         <span className="icon"><img src='/timetable.png'  width={"30px"}/></span>
                         <span>Time Table</span>
