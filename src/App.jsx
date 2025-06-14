@@ -10,7 +10,7 @@ function App() {
   return (
     <>
   <RoutesComponent />
-   <LoginRoute />{ /* //studentDashboard */}
+   {/* <LoginRoute />*/}{ /* //studentDashboard */}  
     <StaffLoginRoute />
   {/* <App */}
   {/* <Login /> */}

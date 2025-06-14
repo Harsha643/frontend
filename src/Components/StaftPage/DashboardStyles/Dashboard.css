@@ -1,0 +1,106 @@
+/* Container for the whole dashboard */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fff;
+}
+
+/* Sidebar Styles */
+.dashboard-sidebar {
+    width: 250px;
+    background-color: #f9f9fa;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* Navigation Buttons */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 15px;
+}
+
+.nav-button {
+    background-color: transparent;
+    color: black;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.nav-button:hover,
+.nav-button.active {
+    background-color: #eaeef1;
+}
+
+/* Icons */
+.nav-button .icon img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Sidebar Footer (Logout) */
+.sidebar-footer {
+    padding: 0 15px;
+}
+
+.logout-button {
+    background-color: #e74c3c;
+    border: none;
+    color: white;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.logout-button:hover {
+    background-color: #c0392b;
+}
+
+/* Main content area */
+.dashboard-main {
+    flex: 1;
+    padding: 20px;
+    background-color: hsl(0, 0%, 100%);
+    overflow-y: auto;
+}
+
+/* Header (you can customize this further inside Header.jsx) */
+.dashboard-main header {
+    margin-bottom: 20px;
+}
+
+/* Content */
+.dashboard-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    min-height: 500px;
+}

@@ -1,0 +1,13 @@
+.home-container {
+    width: 90%;  
+    height: 50%;       /* Modal width */
+    margin: 10px auto;        
+    padding: 10px;
+    background-color: #fff;   /* Optional: light background like a modal */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-carousel {
+    width: 100%;
+}

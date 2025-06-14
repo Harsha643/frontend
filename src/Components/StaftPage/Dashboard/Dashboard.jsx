@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import Header from './Header';
+import Home from './Home';
+import Classes from './Classes';
+import '../DashboardStyles/Dashboard.css';
 
 const StaffDashboard = () => {
     const { state } = useLocation();
@@ -10,7 +14,7 @@ const StaffDashboard = () => {
     const renderPage = () => {
         switch (currentPage) {
             case 'home':
-                return <h2>Home Page</h2>;
+                return <Home /> || <h2>Home Page</h2>;
             case 'notes':
                 return <h2>Notes Page</h2>;
             case 'assignment':
@@ -18,7 +22,7 @@ const StaffDashboard = () => {
             case 'timetable':
                 return <h2>Time Table Page</h2>;
             case 'classes':
-                return <h2>Classes Page</h2>;
+                return <Classes /> || <h2>Classes Page</h2>;
             case 'attendance':
                 return <h2>Attendance Page</h2>;
             case 'feedback':
@@ -32,7 +36,7 @@ const StaffDashboard = () => {
         setStaffdata(staff);
     }, [staff]);
 
-    console.log("Staff Data:", staffdata);
+    // console.log("Staff Data:", staffdata);
 
     return (
           <div className="dashboard-container">
@@ -80,9 +84,12 @@ const StaffDashboard = () => {
             </div>
 
             <div className="dashboard-main">
-                    {/* <Header studentdata={studentdata}/> */}
+                    <Header staffdata={staffdata}/>
+                
                 <div className="dashboard-content">
                     {renderPage()}
+                    
+
                 </div>
             </div>
         </div>
