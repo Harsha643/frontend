@@ -3,12 +3,12 @@ import "./Assign.css";
 
 const Assign = () => {
   const [className, setClassName] = useState("Class 8");
-  const [day, setDay] = useState("Monday");
+  const [day, setDay] = useState("All days");
   const [schedule, setSchedule] = useState([]);
   const [newEntry, setNewEntry] = useState({ subject: "", time: "", teacher: "" });
   const [staff, setStaff] = useState([]);
+  const [teacher, setTeacher] = useState("");
 
-  // Fetch timetable and staff on mount or change
   useEffect(() => {
     const fetchTimetable = async () => {
       try {
@@ -22,11 +22,9 @@ const Assign = () => {
       }
     };
 
-
-
     const fetchStaff = async () => {
       try {
-        const res = await fetch("http://localhost:4000/admin/staff");
+        const res = await fetch(`http://localhost:4000/admin/staff/${newEntry.subject}`);
         const data = await res.json();
         setStaff(data);
       } catch (err) {
@@ -38,11 +36,11 @@ const Assign = () => {
     fetchStaff();
   }, [className, day]);
 
-  // Input handlers
   const handleEntryChange = (e) => {
     const { name, value } = e.target;
     setNewEntry((prev) => ({ ...prev, [name]: value }));
   };
+  
 
   const handleAddEntry = async (e) => {
     e.preventDefault();
@@ -51,6 +49,7 @@ const Assign = () => {
     const payload = {
       className,
       day,
+      teacher,
       schedule: updatedSchedule,
     };
 
@@ -61,44 +60,75 @@ const Assign = () => {
         body: JSON.stringify(payload),
       });
 
-      if (!response.ok) throw new Error("Failed to save");
+      if (!response.ok) {
+            // console.error(data);
+  throw new Error('Failed to save');
+}
 
-      setSchedule(updatedSchedule);
+      setSchedule((prev) => [...prev, ...updatedSchedule]);
       setNewEntry({ subject: "", time: "", teacher: "" });
     } catch (error) {
       console.error("Error adding entry:", error);
     }
   };
 
-  const handleDelete = (index) => {
-    const updatedSchedule = schedule.filter((_, i) => i !== index);
-    setSchedule(updatedSchedule);
-    // Optional: update backend here
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const handleDelete = async (scheduleItemId) => {
+    try {
+      const res = await fetch(`http://localhost:4000/admin/timetable/${className}/${day}`);
+      if (!res.ok) throw new Error("Failed to fetch timetable");
+
+      const data = await res.json();
+      const timetableId = data._id;
+
+      const deleteRes = await fetch(
+        `http://localhost:4000/admin/timetable/${timetableId}/${scheduleItemId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!deleteRes.ok) throw new Error("Failed to delete");
+
+      setSchedule((prev) => prev.filter((item) => item._id !== scheduleItemId));
+      alert("Schedule item deleted successfully");
+    } catch (err) {
+      console.error("Error deleting schedule item:", err);
+      alert("Failed to delete schedule item");
+    }
   };
 
-
-
-
-
+  const   filteredTeachers = staff.filter(
+    (teacher) => teacher.designation && teacher.designation.toLowerCase() === newEntry.subject.toLowerCase()
+  );
+  console.log(newEntry.subject, "Filtered Teachers:", filteredTeachers);
+  console.log("Filtered Teachers:", staff);
   return (
     <div className="assign-container">
       <h2>Timetable Manager</h2>
 
       <div className="select-group">
         <select value={className} onChange={(e) => setClassName(e.target.value)}>
-          <option>Class 1</option>
-          <option>Class 2</option>
-          <option>Class 3</option>
-          <option>Class 4</option>
-          <option>Class 5</option>
-          <option>Class 6</option>
-          <option>Class 7</option>
-          <option>Class 8</option>
-          <option>Class 9</option>
-          <option>Class 10</option>
+          {[...Array(10)].map((_, i) => (
+            <option key={i} value={`Class ${i + 1}`}>{`Class ${i + 1}`}</option>
+          ))}
         </select>
 
         <select value={day} onChange={(e) => setDay(e.target.value)}>
+          <option>All days</option>
           <option>Monday</option>
           <option>Tuesday</option>
           <option>Wednesday</option>
@@ -126,18 +156,21 @@ const Assign = () => {
           required
         />
         <select
-          name="teacher"
-          value={newEntry.teacher}
-          onChange={handleEntryChange}
-          required
-        >
-          <option value="">Select Teacher</option>
-          {staff.map((teacher) => (
-            <option key={teacher._id} value={teacher.teacherName}>
-              {teacher.teacherName}
-            </option>
-          ))}
-        </select>
+  name="teacher"
+  value={newEntry.teacher}
+  onChange={handleEntryChange}
+  required
+>
+  <option value="">Select Teacher</option>
+  <option value="prayer">Prayer</option>
+  <option value="lunch">Lunch</option>
+  <option value="interval">Interval</option>
+  {filteredTeachers.map((teacher) => (
+    <option key={teacher._id} value={teacher.teacherName}>
+      {teacher.teacherName}
+    </option>
+  ))}
+</select>
         <button type="submit">Add</button>
       </form>
 
@@ -150,7 +183,7 @@ const Assign = () => {
               <span>
                 {item.time} - {item.subject} ({item.teacher})
               </span>
-              <button onClick={() => handleDelete(index)}>Delete</button>
+              <button onClick={() => handleDelete(item._id)}>Delete</button>
             </li>
           ))
         )}

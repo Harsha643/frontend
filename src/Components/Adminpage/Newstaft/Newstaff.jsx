@@ -17,6 +17,7 @@ const Newstaff = ({ existingStaff, onClose, refreshData }) => {
     dateOfJoining: ''
   });
 
+
   const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {

@@ -42,6 +42,7 @@ const Timetable = () => {
                                             <div key={itemIndex} className="subject-time-item">
                                                 <div className="subject">{item.subject}</div>
                                                 <div className="time">{item.time}</div>
+                                                <div className="teacher">{item.teacher}</div>
                                             </div>
                                         ))}
                                     </div>

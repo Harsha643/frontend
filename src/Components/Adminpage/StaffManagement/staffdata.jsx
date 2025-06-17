@@ -24,8 +24,9 @@ const StaffDataFetching = () => {
   }, []);
 
   const handleDelete = async (id) => {
+    console.log("Delete staff with ID:", id._id);
     try {
-      await fetch(`http://localhost:4000/admin/staff/${id}`, { method: 'DELETE' });
+      await fetch(`http://localhost:4000/admin/staff/${id._id}`, { method: 'DELETE' });
       fetchData();
     } catch (error) {
       console.error('Delete error:', error);
@@ -96,7 +97,7 @@ const StaffDataFetching = () => {
               <td>{staff.dateOfJoining}</td>
               <td>
                 <button onClick={() => handleUpdate(staff)}>Update</button>
-                <button onClick={() => handleDelete(staff.staffId)}>Delete</button>
+                <button onClick={() => handleDelete(staff)}>Delete</button>
               </td>
             </tr>
           ))}
