@@ -6,12 +6,16 @@ import Classes from './Classes';
 import Notes from './Notes';
 import Timetable from './Timetable';
 import '../DashboardStyles/Dashboard.css';
+import modal from './modal';
+
 
 const StaffDashboard = () => {
     const { state } = useLocation();
     const staff = state?.staffdata;
     const [staffdata, setStaffdata] = useState({});
     const [currentPage, setCurrentPage] = useState('home');
+    const [isTimetableOpen, setTimetableOpen] = useState(false);
+
 
     const renderPage = () => {
         switch (currentPage) {
@@ -86,9 +90,11 @@ const StaffDashboard = () => {
                     <Header staffdata={staffdata}/>
                 
                 <div className="dashboard-content">
-                    {renderPage()}
                     
-
+                    
+                    <modal isOpen={isTimetableOpen} onClose={() => setTimetableOpen(false)}>
+                       {renderPage()}
+                    </modal>
                 </div>
             </div>
         </div>
