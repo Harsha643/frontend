@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import '../DashboardStyles/Classes.css';
+import Header from './Header'; // Adjust path if needed
 
 const Classes = () => {
+    const location = useLocation();
+    const staffdata = location.state?.staffdata;
+
     const [classes, setClasses] = useState([]);
-// const [classValue, setClassValue] = useState(class6 || class7 || class8 || class9 || class10 );
     const [showModal, setShowModal] = useState(false);
     const [selectedClass, setSelectedClass] = useState(null);
     const [formData, setFormData] = useState({
         class: '',
         subject: '',
         topic: '',
-        date: ''
+        date: '',
+        teacher:''
     });
+    console.log("Staff Data:", staffdata);
 
     useEffect(() => {
         fetchClasses();
@@ -27,6 +33,18 @@ const Classes = () => {
         }
     };
 
+    const openNewClassModal = () => {
+        setSelectedClass(null);
+        setFormData({
+            class: '',
+            subject: '',
+            topic: '',
+            date: '',
+            teacher: staffdata?.teacherName || '',
+        });
+        setShowModal(true);
+    };
+
     const handleEdit = (classItem) => {
         setSelectedClass(classItem);
         setFormData({
@@ -34,6 +52,7 @@ const Classes = () => {
             subject: classItem.subject,
             topic: classItem.topic,
             date: new Date(classItem.date).toISOString().split('T')[0],
+            notes: classItem.notes || ''
         });
         setShowModal(true);
     };
@@ -54,24 +73,31 @@ const Classes = () => {
         }
     };
 
-    const handleUpdate = async () => {
+    const handleSave = async () => {
+        const url = selectedClass
+            ? `http://localhost:4000/staff/class/${selectedClass._id}`
+            : 'http://localhost:4000/staff/class';
+
+        const method = selectedClass ? 'PUT' : 'POST';
+
         try {
-            const res = await fetch(`http://localhost:4000/staff/class/${selectedClass._id}`, {
-                method: 'PUT',
+            const res = await fetch(url, {
+                method: method,
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(formData),
             });
+
             if (res.ok) {
                 fetchClasses();
                 setShowModal(false);
-                alert("Updated successfully");
+                alert(selectedClass ? "Updated successfully" : "Added successfully");
             } else {
-                alert("Failed to update");
+                alert("Failed to save");
             }
         } catch (error) {
-            console.error("Update error:", error);
+            console.error("Save error:", error);
         }
     };
 
@@ -84,6 +110,10 @@ const Classes = () => {
 
     return (
         <>
+            {/* {staffdata && <Header staffdata={staffdata} />} */}
+
+            <button className="add-class-btn" onClick={openNewClassModal}>Add New Class</button>
+
             <table className="classes-table">
                 <thead>
                     <tr>
@@ -92,6 +122,7 @@ const Classes = () => {
                         <th>Subject</th>
                         <th>Topic</th>
                         <th>Date</th>
+                    
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -103,6 +134,7 @@ const Classes = () => {
                             <td>{classItem.subject}</td>
                             <td>{classItem.topic}</td>
                             <td>{new Date(classItem.date).toLocaleDateString()}</td>
+                           
                             <td>
                                 <button onClick={() => handleEdit(classItem)}>Edit</button>
                                 <button onClick={() => handleDelete(classItem._id)}>Delete</button>
@@ -115,18 +147,22 @@ const Classes = () => {
             {showModal && (
                 <div className="modal-overlay">
                     <div className="modal-content">
-                        <h2>Edit Class</h2>
+                        <h2>{selectedClass ? 'Edit Class' : 'Add New Class'}</h2>
+
                         <label>Class:</label>
                         <input type="text" name="class" value={formData.class} onChange={handleChange} />
+
                         <label>Subject:</label>
                         <input type="text" name="subject" value={formData.subject} onChange={handleChange} />
+
                         <label>Topic:</label>
                         <input type="text" name="topic" value={formData.topic} onChange={handleChange} />
+
                         <label>Date:</label>
                         <input type="date" name="date" value={formData.date} onChange={handleChange} />
 
                         <div className="modal-actions">
-                            <button onClick={handleUpdate}>Save</button>
+                            <button onClick={handleSave}>{selectedClass ? "Update" : "Add"}</button>
                             <button onClick={() => setShowModal(false)}>Cancel</button>
                         </div>
                     </div>

@@ -5,6 +5,7 @@ import Home from './Home';
 import Classes from './Classes';
 import Notes from './Notes';
 import Timetable from './Timetable';
+import Assignment from './Assignment.jsx';
 import '../DashboardStyles/Dashboard.css';
 import modal from './modal';
 
@@ -16,19 +17,19 @@ const StaffDashboard = () => {
     const [currentPage, setCurrentPage] = useState('home');
     const [isTimetableOpen, setTimetableOpen] = useState(false);
 
-
+    console.log("ddash Data:", staffdata);
     const renderPage = () => {
         switch (currentPage) {
             case 'home':
                 return <Home /> || <h2>Home Page</h2>;
             case 'notes':
-                return <Notes /> || <h2>Notes Page</h2>;
+                return <Notes staffdata={staffdata} /> || <h2>Notes Page</h2>;
             case 'assignment':
-                return <h2>Assignments Page</h2>;
+                return <Assignment staffdata={staffdata} /> || <h2>Assignment Page</h2>;
             case 'timetable':
-                return <Timetable /> || <h2>Time Table Page</h2>;
+                return <Timetable  staffdata={staffdata} /> || <h2>Time Table Page</h2>;
             case 'classes':
-                return <Classes /> || <h2>Classes Page</h2>;
+                return <Classes staffdata={staffdata} /> || <h2>Classes Page</h2>;
             case 'attendance':
                 return <h2>Attendance Page</h2>;
             case 'feedback':

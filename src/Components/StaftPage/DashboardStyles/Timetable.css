@@ -88,3 +88,16 @@ h1 {
     border-radius: 8px;
     width: 100px;
 }
+
+.subject-time-item {
+    background-color: #f0f0f0;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.subject-time-item.highlight {
+    background-color: #b0f4b0; /* light green */
+    border: 2px solid green;
+}

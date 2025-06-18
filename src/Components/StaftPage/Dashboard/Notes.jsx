@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from "react";
 import "../DashboardStyles/notes.css";
-
-const Notes = () => {
+import { useLocation } from 'react-router-dom';
+const Notes = ({staffdata}) => {
     const [notes, setNotes] = useState([]);
     const [filteredNotes, setFilteredNotes] = useState([]);
     const [selectedNote, setSelectedNote] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [viewLink, setViewLink] = useState("");
     const [isEditing, setIsEditing] = useState(false);
-    const [selectedClass, setSelectedClass] = useState(9);
+    const[Teacherdata, setTeacherdata] = useState( {});
+    const [selectedClass, setSelectedClass] = useState("");
+       const location = useLocation();
+        const staff = location.state?.staffdata;
 
     useEffect(() => {
         fetchNotes();
     }, []);
+
+    useEffect(() => {
+        setTeacherdata(staff);
+    }, [staffdata]);
 
     const fetchNotes = async () => {
         try {
@@ -41,7 +48,7 @@ const Notes = () => {
             subject: "",
             title: "",
             link: "",
-            teacherName: ""
+            teacherName: staffdata?.teacherName || "",
         });
         setIsEditing(false);
         setShowModal(true);

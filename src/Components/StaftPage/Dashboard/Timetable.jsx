@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "../DashboardStyles/Timetable.css";
-
 
 const Timetable = () => {
     const [data, setData] = useState([]);
-   
+    const location = useLocation();
+    const staff = location.state?.staffdata;
+    const [staffdata, setStaffdata] = useState({});
+
+    useEffect(() => {
+        setStaffdata(staff);
+    }, [staff]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:4000/admin/timetable');
+                const response = await fetch("http://localhost:4000/admin/timetable");
                 const data = await response.json();
                 setData(data);
             } catch (error) {
-                console.error('Error fetching timetable:', error);
+                console.error("Error fetching timetable:", error);
             }
         };
         fetchData();
@@ -40,13 +46,22 @@ const Timetable = () => {
                                 <td>Monday-Saturday</td>
                                 <td className="subject-time-container">
                                     <div className="subject-time-grid">
-                                        {classItem.schedule.map((item, itemIndex) => (
-                                            <div key={itemIndex} className="subject-time-item">
-                                                <div className="subject">{item.subject}</div>
-                                                <div className="time">{item.time}</div>
-                                                <div className="teacher">{item.teacher}</div>
-                                            </div>
-                                        ))}
+                                        {classItem.schedule.map((item, itemIndex) => {
+                                            const isStaffTeacher =
+                                                item.teacher?.toLowerCase() === staffdata?.teacherName?.toLowerCase();
+                                            return (
+                                                <div
+                                                    key={itemIndex}
+                                                    className={`subject-time-item ${
+                                                        isStaffTeacher ? "highlight" : ""
+                                                    }`}
+                                                >
+                                                    <div className="subject">{item.subject}</div>
+                                                    <div className="time">{item.time}</div>
+                                                    <div className="teacher">{item.teacher}</div>
+                                                </div>
+                                            );
+                                        })}
                                     </div>
                                 </td>
                             </tr>
