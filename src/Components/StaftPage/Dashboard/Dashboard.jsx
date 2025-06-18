@@ -6,6 +6,7 @@ import Classes from './Classes';
 import Notes from './Notes';
 import Timetable from './Timetable';
 import Assignment from './Assignment.jsx';
+import Feedback from './Feedback';
 import '../DashboardStyles/Dashboard.css';
 import modal from './modal';
 
@@ -33,9 +34,9 @@ const StaffDashboard = () => {
             case 'attendance':
                 return <h2>Attendance Page</h2>;
             case 'feedback':
-                return <h2>Feedback Page</h2>;
+                return <Feedback /> || <h2>Feedback Page</h2>;
             default:
-                return <h2>Home Page</h2>;
+                return <Home /> || <h2>Home Page</h2>;
         }
     }
 
