@@ -11,6 +11,8 @@ import StaffDataFetching from "../StaffManagement/staffdata"
 import Timetable from "../Time-Table/Timetable"
 import FeeManagement from "../FeeManagement/FeeManagement"
 import ClassManagement from "../ClassManagement/ClassManagement"
+import Feedback from "../../StaftPage/Dashboard/Feedback"
+import Notes from "../Notes/Notes"
 const RoutesComponent = () => {
     return(
         <Routes>
@@ -25,6 +27,9 @@ const RoutesComponent = () => {
             <Route path="/Events" element={<Events />} />
             <Route path="/Assign" element={<Assign />} />
             <Route path="/Gallery" element={<Gallery />} />
+            <Route path="/Notes" element={<Notes />} />
+            <Route path="/Attendance" element={<h1>Attendance</h1>} />
+            <Route path="/Feedback" element={<Feedback />} />
         </Routes>
     )
 }

@@ -71,7 +71,7 @@ const Newstaff = ({ existingStaff, onClose, refreshData }) => {
   };
 
     const handleCancel = () => {
-    navigate("/Admin"); // or the correct route for your Admin page
+    navigate("/Admin"); 
   };
 
 

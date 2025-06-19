@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import '../DashboardStyles/feedback.css';
+import { useNavigate } from "react-router-dom";
+import './feedback.css';
 
 const Feedback = () => {
+    const navigate = useNavigate();
     const [feedback, setFeedback] = useState([]);
     const [selectedClass, setSelectedClass] = useState('');
     const [classList] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);

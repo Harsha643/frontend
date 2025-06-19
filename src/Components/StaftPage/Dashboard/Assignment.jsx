@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Modal from 'react-modal';
+import '../DashboardStyles/Assignment.css';
 
 Modal.setAppElement('#root'); // This is important for accessibility
 
@@ -78,16 +79,16 @@ const Assignment = () => {
         setModalIsOpen(true);
     };
 
-    const handleDelete = async (id) => {
-        try {
-            await fetch(`http://localhost:4000/staff/assignments/${id}`, {
-                method: 'DELETE',
-            });
-            fetchAssignment();
-        } catch (err) {
-            console.error('Delete failed', err);
-        }
-    };
+    // const handleDelete = async (id) => {
+    //     try {
+    //         await fetch(`http://localhost:4000/staff/assignments/${id}`, {
+    //             method: 'DELETE',
+    //         });
+    //         fetchAssignment();
+    //     } catch (err) {
+    //         console.error('Delete failed', err);
+    //     }
+    // };
 
     return (
         <div className="assignment-container">
@@ -167,7 +168,7 @@ const Assignment = () => {
                             <td><a href={item.link} target="_blank" rel="noreferrer">Open</a></td>
                             <td>
                                 <button onClick={() => handleEdit(index)}>Edit</button>
-                                <button onClick={() => handleDelete(item._id)}>Delete</button>
+                                {/* <button onClick={() => handleDelete(item._id)}>Delete</button> */}
                             </td>
                         </tr>
                     ))}

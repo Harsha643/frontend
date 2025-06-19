@@ -16,6 +16,9 @@ const Admin = () => {
       <h1 onClick={()=>navigate("/Assign")}>Subject and class</h1>
       <h1 onClick={()=>navigate("/feemanagement")}>Fee Management</h1>
       <h1 onClick={()=>{navigate("/ClassManagement")}}>Class Management</h1>
+      <h1 onClick={()=>navigate("/Notes")}>Notes</h1>
+      <h1 onClick={()=>navigate("/Attendance")}>Attendance</h1>
+      <h1 onClick={()=>navigate("/Feedback")}>Feedback</h1>
       <h1  onClick={()=>navigate("/Gallery")}>Gallery</h1>
     </div>
     
