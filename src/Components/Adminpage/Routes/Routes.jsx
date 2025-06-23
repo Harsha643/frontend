@@ -28,7 +28,7 @@ const RoutesComponent = () => {
             <Route path="/Assign" element={<Assign />} />
             <Route path="/Gallery" element={<Gallery />} />
             <Route path="/Notes" element={<Notes />} />
-            <Route path="/Attendance" element={<h1>Attendance</h1>} />
+            <Route path="/Attendance" element={<h1>Attendance</h1>}/>
             <Route path="/Feedback" element={<Feedback />} />
         </Routes>
     )

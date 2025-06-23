@@ -4,14 +4,18 @@ import RoutesComponent from './Components/Adminpage/Routes/Routes';
 import LoginRoute from './Components/Studentspage/StudentRoutes/Routes';
 
 import StaffLoginRoute from './Components/StaftPage/StaffRoutes/LOginRoute';
+import AdminLogin from './Components/AdminLogin/Admin';
 function App() {
   
 
   return (
     <>
-  <RoutesComponent />
+  {/* <RoutesComponent /> */}// {/* //Adminpage */}
+
+  <AdminLogin />
    {/* <LoginRoute />*/}{ /* //studentDashboard */}  
-    <StaffLoginRoute />
+    {/* <StaffLoginRoute /> */}
+
   {/* <App */}
   {/* <Login /> */}
 
