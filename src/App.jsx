@@ -1,33 +1,35 @@
 
+// import RoutesComponent from './Components/Adminpage/Routes/Routes';
+
+// import LoginRoute from './Components/Studentspage/StudentRoutes/Routes';
+
+// import StaffLoginRoute from './Components/StaftPage/StaffRoutes/LOginRoute';
+import AdminLogin from './Components/AdminLogin/Admin';
+import {Routes,Route} from "react-router-dom" 
 import RoutesComponent from './Components/Adminpage/Routes/Routes';
 
-import LoginRoute from './Components/Studentspage/StudentRoutes/Routes';
-
-import StaffLoginRoute from './Components/StaftPage/StaffRoutes/LOginRoute';
-import AdminLogin from './Components/AdminLogin/Admin';
 function App() {
   
 
   return (
-    <>
-  {/* <RoutesComponent /> */}// {/* //Adminpage */}
+    
+  
 
-  <AdminLogin />
-   {/* <LoginRoute />*/}{ /* //studentDashboard */}  
-    {/* <StaffLoginRoute /> */}
+      <Routes>
+            <Route path="/" element={<AdminLogin />} />
+           
+           
+            <Route path="/admin/*" element={<RoutesComponent />} />
+            
+            
+        </Routes >
+        
+      
 
-  {/* <App */}
-  {/* <Login /> */}
-
-      {/* <Landing />
-      <Home />
-      <Features />
-      <SmartCourses />
-      <ContactUs /> */
-      /* <Main1 /> */}
-       
-    </>
+      
   )
 }
 
 export default App
+
+

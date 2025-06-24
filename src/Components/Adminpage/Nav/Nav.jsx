@@ -1,9 +1,16 @@
 import React,{useState,useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import "./nav.css"
 
 const Nav = () => {
     const [admin, setAdmin] = useState(null);
     const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setAdmin(null);
+    navigate('/');
+  };  
   
     useEffect(() => {
       const fetchProfile = async () => {
@@ -29,6 +36,7 @@ const Nav = () => {
   
       fetchProfile();
     }, []);
+    console.log(admin);
   return (
    <>
    <div className="header">
@@ -36,7 +44,10 @@ const Nav = () => {
     {admin ? (
       <div className='insidediv'>
         <nav className='loginbtn'>Welcome, {admin.name}</nav>
-        <img src="/profile.png" alt="profile" width={"100px"} />
+      <nav className='logoutbtn' onClick={() =>handleLogout() }>Logout</nav>
+        <img src={admin.image || "/profile.png"} alt="" width={"70px"} style={{borderRadius:"50%", height:"70px"}} />
+        
+      
       </div>
 
     ) : (

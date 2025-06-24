@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Gallery.css'; // Import your CSS styles
 
 const Gallery = () => {
   const [image, setImage] = useState({
