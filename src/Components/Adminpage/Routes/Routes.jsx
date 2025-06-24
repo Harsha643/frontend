@@ -1,8 +1,6 @@
 
 import {Routes,Route} from "react-router-dom" 
 import Main1 from "../Mainpage/main1"
-import Newstudent from "../Newstudent/Newstudent"
-import Newstaff from "../Newstaft/Newstaff"
 import Events from "../SchoolEvents/Events"
 import Assign from "../SubjectAndClass/Assign"
 import Gallery from "../Gallery/Gallery"
@@ -14,6 +12,7 @@ import ClassManagement from "../ClassManagement/ClassManagement"
 import Feedback from "../../StaftPage/Dashboard/Feedback"
 import Notes from "../Notes/Notes"
 import NewStdt from "../Newstudent/NewStdt"
+import Dashboard from "../../Studentspage/Dashboard/Dashboard"
 
 
 const RoutesComponent = () => {
@@ -26,7 +25,6 @@ const RoutesComponent = () => {
             <Route path="ClassManagement" element={<ClassManagement />} />
             <Route path="Timetable" element={<Timetable />} />
             <Route path="feemanagement" element={<FeeManagement />} />
-            {/* <Route path="Newstaff" element={<Newstaff />} /> */}
             <Route path="Events" element={<Events />} />
             <Route path="Assign" element={<Assign />} />
             <Route path="Gallery" element={<Gallery />} />

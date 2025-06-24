@@ -102,100 +102,98 @@
 .feedback-header button:hover {
     background-color: #218838;
 }
-
-/* Table
-.assignment-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    overflow: hidden;
+/* Scrollable wrapper for table */
+.feedback-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: auto; /* Optional vertical scroll */
+  max-height: 75vh; /* Optional max height */
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  -webkit-overflow-scrolling: touch; /* Smooth scroll for iOS */
 }
 
-.assignment-table th,
-.assignment-table td {
-    padding: 0.75rem;
-    text-align: center;
-    border-bottom: 1px solid #e0e0e0;
+/* Feedback table styling */
+.feedback-table {
+  width: 100%;
+  min-width: 700px; /* Ensures scroll on small screens */
+  border-collapse: collapse;
 }
 
-.assignment-table th {
-    background-color: #007bff;
-    color: white;
+.feedback-table th,
+.feedback-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border: 1px solid #ddd;
+  white-space: nowrap; /* Prevent wrapping */
 }
 
-.assignment-table td {
+.feedback-table th {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+.feedback-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Responsive tweaks */
+@media screen and (max-width: 768px) {
+  .feedback-table {
     font-size: 0.95rem;
-} */
+    min-width: 600px;
+  }
 
-.modal-content {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 10px;
-    width: 400px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+  .feedback-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
 
-.modal-content h2 {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-    color: #333;
-    text-align: center;
-}
-
-/* Labels */
-.modal-content label {
-    display: block;
-    font-weight: 600;
-    margin: 0.75rem 0 0.25rem;
-    color: #333;
-}
-
-/* Input & Textarea */
-.modal-content input,
-.modal-content textarea {
+  .feedback-header select,
+  .feedback-header button {
     width: 100%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    margin-bottom: 0.75rem;
-    box-sizing: border-box;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 1.5rem;
+  }
 }
 
-.modal-content textarea {
-    resize: vertical;
-}
+@media screen and (max-width: 480px) {
+  .feedback-table {
+    font-size: 0.85rem;
+    min-width: 500px;
+  }
 
-/* Buttons */
-.modal-content button {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    margin-top: 0.5rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+  .feedback-table th,
+  .feedback-table td {
+    padding: 10px;
+  }
 
-.modal-content button:first-of-type {
-    background-color: #007bff;
-    color: white;
-    margin-right: 10px;
-}
+  .feedback-header label {
+    font-size: 0.9rem;
+  }
 
-.modal-content button:first-of-type:hover {
-    background-color: #0056b3;
-}
+  .feedback-header select,
+  .feedback-header button {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
 
-.modal-content button:last-of-type {
-    background-color: #dc3545;
-    color: white;
-}
+  .modal-content {
+    width: 95%;
+    padding: 1rem;
+  }
 
-.modal-content button:last-of-type:hover {
-    background-color: #c82333;
+  .modal-content input,
+  .modal-content textarea {
+    font-size: 0.9rem;
+  }
+
+  .modal-content button {
+    font-size: 0.9rem;
+  }
 }

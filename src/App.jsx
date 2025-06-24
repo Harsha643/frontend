@@ -7,6 +7,8 @@
 import AdminLogin from './Components/AdminLogin/Admin';
 import {Routes,Route} from "react-router-dom" 
 import RoutesComponent from './Components/Adminpage/Routes/Routes';
+import Dashboard from './Components/Studentspage/Dashboard/Dashboard';
+import StaffDashboard from './Components/StaftPage/Dashboard/Dashboard';
 
 function App() {
   
@@ -17,9 +19,9 @@ function App() {
 
       <Routes>
             <Route path="/" element={<AdminLogin />} />
-           
-           
             <Route path="/admin/*" element={<RoutesComponent />} />
+            <Route path="/Student-Dashboard/*" element={<Dashboard />} />
+            <Route path='/Staff-Dashboard' element={<StaffDashboard />} />
             
             
         </Routes >

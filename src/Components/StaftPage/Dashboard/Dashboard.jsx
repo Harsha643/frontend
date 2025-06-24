@@ -8,7 +8,7 @@ import Timetable from './Timetable';
 import Assignment from './Assignment.jsx';
 import Feedback from './Feedback';
 import '../DashboardStyles/Dashboard.css';
-import modal from './modal';
+// import modal from './modal';
 
 
 const StaffDashboard = () => {
@@ -56,7 +56,7 @@ const StaffDashboard = () => {
                 <nav className="sidebar-nav">
                     <button className="nav-button" onClick={() => setCurrentPage('home')}>
                         <span className="icon"><img src='/home1.png'  width={"30px"}/></span>
-                        <span>Home</span>
+                        <span o>Home</span>
                     </button>
                     <button className="nav-button" onClick={() => setCurrentPage('classes')}>
                         <span className="icon"><img src='/class.png'  width={"30px"}/></span>

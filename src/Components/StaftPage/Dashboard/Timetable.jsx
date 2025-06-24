@@ -6,10 +6,10 @@ const Timetable = () => {
     const [data, setData] = useState([]);
     const location = useLocation();
     const staff = location.state?.staffdata;
-    const [staffdata, setStaffdata] = useState({});
+    const [staffData, setStaffData] = useState({});
 
     useEffect(() => {
-        setStaffdata(staff);
+        setStaffData(staff);
     }, [staff]);
 
     useEffect(() => {
@@ -26,49 +26,44 @@ const Timetable = () => {
     }, []);
 
     return (
-        <div className="timetable-container">
-            <h1>Time Table</h1>
-            <table className="timetable" cellSpacing="0" cellPadding="5" border="1">
-                <thead>
-                    <tr>
-                        <th>Class</th>
-                        <th>Subject and Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((classItem, classIndex) => (
-                        <React.Fragment key={classIndex}>
-                            <tr className="class-header">
-                                <td>{classItem.className}</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Monday-Saturday</td>
-                                <td className="subject-time-container">
-                                    <div className="subject-time-grid">
-                                        {classItem.schedule.map((item, itemIndex) => {
-                                            const isStaffTeacher =
-                                                item.teacher?.toLowerCase() === staffdata?.teacherName?.toLowerCase();
-                                            return (
-                                                <div
-                                                    key={itemIndex}
-                                                    className={`subject-time-item ${
-                                                        isStaffTeacher ? "highlight" : ""
-                                                    }`}
-                                                >
-                                                    <div className="subject">{item.subject}</div>
-                                                    <div className="time">{item.time}</div>
-                                                    <div className="teacher">{item.teacher}</div>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                </td>
-                            </tr>
-                        </React.Fragment>
-                    ))}
-                </tbody>
-            </table>
+        <div className="timetable-wrapper">
+            <h1 className="timetable-title">Time Table</h1>
+            <div className="timetable-scroll">
+                <table className="timetable-table">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Schedule (Mon - Sat)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.map((classItem, classIndex) => (
+                            <React.Fragment key={classIndex}>
+                                <tr className="class-row">
+                                    <td className="class-name">{classItem.className}</td>
+                                    <td>
+                                        <div className="schedule-grid">
+                                            {classItem.schedule.map((item, index) => {
+                                                const isCurrentTeacher = item.teacher?.toLowerCase() === staffData?.teacherName?.toLowerCase();
+                                                return (
+                                                    <div
+                                                        key={index}
+                                                        className={`schedule-item ${isCurrentTeacher ? "highlight" : ""}`}
+                                                    >
+                                                        <div className="subject">{item.subject}</div>
+                                                        <div className="time">{item.time}</div>
+                                                        <div className="teacher">{item.teacher}</div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </React.Fragment>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

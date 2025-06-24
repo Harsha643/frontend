@@ -3,12 +3,11 @@ import Login from "../Dashboard/login"
 import Dashboard from "../Dashboard/Dashboard";
 
 
-function LoginRoute(){
+function StudentRoute(){
     return (
 
             <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="Home" element={<Home />} />
             </Routes>
 
     );

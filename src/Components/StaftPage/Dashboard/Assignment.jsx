@@ -92,8 +92,10 @@ const Assignment = () => {
 
     return (
         <div className="assignment-container">
-            <h2>Assignments</h2>
-            <button onClick={() => setModalIsOpen(true)}>+ Add Assignment</button>
+          <div className="assignment-header">
+  <h2 className="assignment-heading">Assignments</h2>
+  <button className="add-assignment-button" onClick={() => setModalIsOpen(true)}>+ Add Assignment</button>
+</div>
 
             <Modal
                 isOpen={modalIsOpen}
@@ -107,6 +109,7 @@ const Assignment = () => {
                 overlayClassName="modal-overlay"
             >
                 <h2>{editIndex !== null ? 'Edit Assignment' : 'Add New Assignment'}</h2>
+                    <div className="table-responsive">
                 <form onSubmit={handleSubmit}>
                     <input
                         name="classNumber"
@@ -145,8 +148,9 @@ const Assignment = () => {
                     <button type="submit">{editIndex !== null ? 'Update' : 'Add'}</button>
                     <button type="button" onClick={() => setModalIsOpen(false)}>Cancel</button>
                 </form>
+                </div>
             </Modal>
-
+<div className="table-responsive">
             <table className="assignment-table" cellSpacing="0" cellPadding="5" border="1">
                 <thead>
                     <tr>
@@ -174,6 +178,7 @@ const Assignment = () => {
                     ))}
                 </tbody>
             </table>
+            </div>
         </div>
     );
 };

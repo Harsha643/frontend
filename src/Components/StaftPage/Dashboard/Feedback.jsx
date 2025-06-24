@@ -124,6 +124,7 @@ const Feedback = () => {
 
                 <button onClick={() => openFeedbackModal(null)}>Add Feedback</button>
             </div>
+                    <div className="feedback-table-wrapper">
 
             <table className="assignment-table" cellSpacing="0" cellPadding="5" border="1">
                 <thead>
@@ -149,7 +150,7 @@ const Feedback = () => {
                     ))}
                 </tbody>
             </table>
-
+                </div>
             {isModalOpen && (
                 <div style={{
                     position: 'fixed',

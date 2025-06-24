@@ -1,5 +1,4 @@
-/* Classes.css */
-
+/* ======= Buttons ======= */
 .add-class-btn {
     background-color: #28a745;
     color: white;
@@ -16,14 +15,30 @@
     background-color: #218838;
 }
 
+/* Add this to Classes.css */
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+ 
+  margin: 0 auto;
+}
+
+
+
+/* ======= Table Styles ======= */
 .classes-table {
-    width: 95%;
     margin: auto;
-    border-collapse: collapse;
+    
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
     border-radius: 8px;
     overflow: hidden;
+    table-layout: fixed;
+     width: 100%;
+    min-width: 600px; /* Prevent columns from collapsing on small screens */
+  border-collapse: collapse;
 }
 
 .classes-table th,
@@ -32,6 +47,7 @@
     border-bottom: 1px solid #eee;
     text-align: center;
     font-size: 0.95rem;
+    word-wrap: break-word;
 }
 
 .classes-table th {
@@ -63,6 +79,7 @@
     color: white;
 }
 
+/* ======= Modal Overlay ======= */
 .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -73,6 +90,7 @@
     z-index: 1000;
 }
 
+/* ======= Modal Content ======= */
 .modal-content {
     background: #fff;
     padding: 2rem;
@@ -103,6 +121,7 @@
     font-size: 1rem;
 }
 
+/* ======= Modal Actions ======= */
 .modal-actions {
     margin-top: 1.5rem;
     display: flex;
@@ -129,29 +148,75 @@
     color: white;
 }
 
-@media screen and (max-width: 600px) {
+/* ======= Tablet (≤768px) ======= */
+@media screen and (max-width: 768px) {
+    .add-class-btn {
+        width: 90%;
+        margin: 10px auto;
+        display: block;
+        font-size: 0.95rem;
+    }
+
     .classes-table th,
     .classes-table td {
         font-size: 0.85rem;
         padding: 10px;
     }
 
+    .modal-content {
+        width: 90%;
+        padding: 1.5rem;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .modal-actions button {
+        width: 100%;
+        font-size: 0.95rem;
+    }
+}
+
+/* ======= Mobile (≤480px) ======= */
+@media screen and (max-width: 480px) {
     .add-class-btn {
         width: 90%;
         margin: 10px auto;
-        display: block;
+        font-size: 0.9rem;
+    }
+
+    .classes-table {
+        width: 100%;
+        font-size: 0.8rem;
+    }
+
+    .classes-table th,
+    .classes-table td {
+        font-size: 0.75rem;
+        padding: 8px;
+    }
+
+    .classes-table button {
+        font-size: 0.75rem;
+        padding: 5px 8px;
     }
 
     .modal-content {
         padding: 1rem;
     }
 
-    .modal-actions {
-        flex-direction: column;
-        align-items: stretch;
+    .modal-content label {
+        font-size: 0.85rem;
+    }
+
+    .modal-content input {
+        font-size: 0.9rem;
     }
 
     .modal-actions button {
-        width: 100%;
+        font-size: 0.9rem;
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-// import "../DashboardStyles/Header.css";
+import '../DashboardStyles/Header.css'; // make sure this file exists
 
 const Header = ({ staffdata }) => {
     return (
@@ -7,21 +7,16 @@ const Header = ({ staffdata }) => {
             <img 
                 src={staffdata?.image}
                 alt={`${staffdata?.teacherName || 'teacher'} profile`}
-                width="50px"
-                style={{ 
-                    borderRadius: "50%",
-                    border: "2px solid #fff",
-                    boxSizing: "border-box",
-                    backgroundColor: "#fff"
-                }}
+                className='profile-image'
                 onError={(e) => {
                     e.target.src = '/profile.png';
-                    e.target.alt = ' profile';
+                    e.target.alt = 'profile';
                 }}
             />
-            <h2>{staffdata?.teacherName}</h2>
-            <h2>{staffdata?.staffId}</h2>
-                
+            <div className="staff-info">
+                <h2 className="staff-name">{staffdata?.teacherName}</h2>
+                <h2 className="staff-id">{staffdata?.staffId}</h2>
+            </div>
         </div>
     );
 };

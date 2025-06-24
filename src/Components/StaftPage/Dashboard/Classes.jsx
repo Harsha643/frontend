@@ -113,7 +113,7 @@ const Classes = () => {
             {/* {staffdata && <Header staffdata={staffdata} />} */}
 
             <button className="add-class-btn" onClick={openNewClassModal}>Add New Class</button>
-
+            <div className="table-wrapper">
             <table className="classes-table">
                 <thead>
                     <tr>
@@ -143,6 +143,7 @@ const Classes = () => {
                     ))}
                 </tbody>
             </table>
+            </div >
 
             {showModal && (
                 <div className="modal-overlay">

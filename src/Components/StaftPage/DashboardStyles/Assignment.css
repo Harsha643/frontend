@@ -1,124 +1,118 @@
-.assignment-container {
-    padding: 2rem;
-    max-width: 1000px;
-    margin: 0 auto;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f9faff;
-    border-radius: 8px;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+/* Wrapper for scroll */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: auto; /* optional: for vertical scroll */
+  max-height: 80vh; /* optional: limit height */
+  -webkit-overflow-scrolling: touch;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.assignment-container h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-size: 2rem;
-    color: #333;
-}
-
-.assignment-container button {
-    background-color: #4a90e2;
-    color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 6px;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    font-size: 1rem;
-}
-
-.assignment-container button:hover {
-    background-color: #0056b3;
-}
-
-/* Table Styling */
+/* Table structure */
 .assignment-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    overflow: hidden;
+  width: 100%;
+  min-width: 700px; /* triggers horizontal scroll on small screens */
+  border-collapse: collapse;
 }
 
 .assignment-table th,
 .assignment-table td {
-    padding: 0.75rem;
-    text-align: center;
-    border-bottom: 1px solid #e0e0e0;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  text-align: left;
+  white-space: nowrap; /* keep cell content in one line */
 }
 
 .assignment-table th {
-    background-color: #4a90e2;
-    color: white;
+  background-color: #e3f2fd;
+  color: #0d47a1;
+  font-weight: 600;
 }
 
-.assignment-table a {
-    color: #4a90e2;
-    text-decoration: none;
+.assignment-table tr:nth-child(even) {
+  background-color: #f1f1f1;
 }
 
-.assignment-table a:hover {
-    text-decoration: underline;
+.no-data {
+  padding: 20px;
+  color: #888;
+  font-style: italic;
 }
 
-/* Modal Styling */
-.modal-overlay {
-    background-color: rgba(0, 0, 0, 0.5);
+/* Buttons */
+.add-assignment-button {
+  background-color: #2196f3;
+  color: #fff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px;
+  margin-left: 10px;
 }
 
-.modal-content {
-    background-color: white;
-    padding: 2rem;
-    max-width: 500px;
-    margin: 5% auto;
-    border-radius: 10px;
-    outline: none;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+.add-assignment-button:hover {
+  background-color: #1976d2;
 }
 
-.modal-content h2 {
-    margin-top: 0;
-    font-size: 1.5rem;
-    color: #222;
+/* Modal remains unchanged except optional width control */
+
+/* ========== RESPONSIVE TABLET ========== */
+@media screen and (max-width: 768px) {
+  .assignment-table {
+    font-size: 0.9rem;
+    min-width: 600px;
+  }
+
+  .assignment-table th,
+  .assignment-table td {
+    padding: 10px 12px;
+  }
+
+  .add-assignment-button {
+    width: 100%;
+    margin: 10px 0;
+    font-size: 0.95rem;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 1.5rem;
+  }
 }
 
-.modal-content form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
+/* ========== RESPONSIVE MOBILE ========== */
+@media screen and (max-width: 480px) {
+  .assignment-table {
+    font-size: 0.8rem;
+    min-width: 500px;
+  }
 
-.modal-content input {
-    padding: 0.6rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-}
+  .assignment-table th,
+  .assignment-table td {
+    padding: 8px 10px;
+  }
 
-.modal-content button {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s;
-}
+  .add-assignment-button {
+    font-size: 0.9rem;
+    padding: 8px 14px;
+  }
 
-.modal-content button[type="submit"] {
-    background-color: #28a745;
-    color: white;
-}
+  .modal-content {
+    width: 95%;
+    padding: 1rem;
+  }
 
-.modal-content button[type="submit"]:hover {
-    background-color: #218838;
-}
+  .modal-content input {
+    font-size: 0.9rem;
+  }
 
-.modal-content button[type="button"] {
-    background-color: #dc3545;
-    color: white;
-}
-
-.modal-content button[type="button"]:hover {
-    background-color: #c82333;
+  .modal-content button {
+    font-size: 0.9rem;
+  }
 }
