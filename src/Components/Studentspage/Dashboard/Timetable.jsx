@@ -1,6 +1,6 @@
 import { bottom } from "@popperjs/core";
 import React, { useEffect, useState } from "react";
-
+import "../DashboardStyles/Timetable.css"
 const Timetable = ({ classData }) => {
   const [timetable, setTimetable] = useState([]);
   const [filteredSchedule, setFilteredSchedule] = useState([]);
@@ -67,7 +67,7 @@ const Timetable = ({ classData }) => {
 
   const secondary = [
     "9:00-9:45",
-    "9:45 - 10:30",
+    "9:45-10:30",
     "10:30-11:15",
     "11:15-11:30",
     "11:30-12:15",

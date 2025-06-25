@@ -12,15 +12,20 @@ const Notes = ({ classData }) => {
             .then(data => setNotes(data))
             .catch(error => console.error('Error fetching notes:', error));
     }, []);
+    console.log("classes",classData)
 
     useEffect(() => {
         if (notes.length > 0 && classData) {
+
             const classNotes = notes.filter(note => Number(note.classNumber) === Number(classData));
             setFilteredNotes(classNotes);
         } else {
             setFilteredNotes([]);
         }
     }, [notes, classData]);
+    console.log("notes",notes)
+    console.log(filteredNotes)
+
 
     return (
         <div className="notes-container">
@@ -33,7 +38,7 @@ const Notes = ({ classData }) => {
                             <h3>{note.title}</h3>
                             {note.link && (
                                 <a href={note.link} target="_blank" rel="noopener noreferrer">
-                                    Download File
+                                    View Note
                                 </a>
                             )}
                         </li>

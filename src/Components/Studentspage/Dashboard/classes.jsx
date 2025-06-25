@@ -1,62 +1,49 @@
-import React,{useEffect,useState} from "react"
+import React, { useEffect, useState } from "react";
+import "../DashboardStyles/Classes.css";
 
-const Classes=({classData})=>{
-    const [classes,setClasses]=useState([])
-    const [filteredClass,SetFilterClass]=useState([])
-useEffect(()=>{
-             async function getClasses(){
-                    const response=await fetch('http://localhost:4000/staff/class')
-                    const data=await response.json()
-                    console.log("10",data)
-                    setClasses(data)
+const Classes = ({ classData }) => {
+  const [classes, setClasses] = useState([]);
+  const [filteredClass, setFilteredClass] = useState([]);
 
-             }
-
-getClasses()
-console.log(classData)
-
-        },[])
-    
-console.log(classes)
-
-useEffect(()=>{
-    const filteringData=classes.filter((item)=>item.class===classData)
-    SetFilterClass(filteringData)
-},[classes,classData])
-
-console.log("this is the filtered class",filteredClass)
-
-
-const handleclick=()=>{
-
-}
-
-return(
-    <>
-    <div className="classes-container">
-    <h1>this is class</h1>
-        <div className="class-list">
-            {filteredClass.map((item,index)=>
-                      <div className="inside-list">
-                          <h2>Topic:{item.topic}</h2>
-                        <h2>subjet:{item.subject}</h2>
-                        <button onclick={handleclick()}>Notes</button>
-                        </div>
-            )}
-        </div>
-    </div>
-    </>
-)
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+  useEffect(() => {
+    async function getClasses() {
+      const response = await fetch("http://localhost:4000/staff/class");
+      const data = await response.json();
+      console.log("Fetched data:", data);
+      setClasses(data);
     }
 
-export default Classes
+    getClasses();
+    console.log("Received classData prop:", classData);
+  }, []);
+
+  useEffect(() => {
+    const filteringData = classes.filter((item) => item.class === classData);
+    setFilteredClass(filteringData);
+  }, [classes, classData]);
+
+  const handleClick = () => {
+    // Your logic here
+  };
+
+  return (
+    <div className="classes-container">
+      <h1>Classes</h1>
+      <div className="class-list">
+        {filteredClass.map((item, index) => {
+          const onlyDate = new Date(item.date).toISOString().split("T")[0];
+          return (
+            <div key={index} className="inside-list">
+              <h2>Topic: {item.topic}</h2>
+              <h2>Subject: {item.subject}</h2>
+              <h2>Date: {onlyDate}</h2>
+              <button onClick={handleClick}>Notes</button>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default Classes;
