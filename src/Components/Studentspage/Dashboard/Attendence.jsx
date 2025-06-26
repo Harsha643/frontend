@@ -1,29 +1,26 @@
 import React, { useState, useEffect } from "react";
-import "../DashboardStyles/Attendance.css"; // Make sure this file exists
+import "../DashboardStyles/Attendance.css";
 
 const Attendance = ({ rollNumber }) => {
     const [attendance, setAttendance] = useState([]);
     const [filteredAttendance, setFilteredAttendance] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const getAttendance = async () => {
         try {
-            setLoading(true);
-            setError(null);
-
             const response = await fetch('http://localhost:4000/admin/attendance/student');
             if (!response.ok) {
                 throw new Error(`Server error: ${response.status}`);
             }
-
             const data = await response.json();
             setAttendance(data);
         } catch (err) {
             console.error("Error fetching attendance:", err);
-            setError("Failed to load attendance. Please try again later.");
         } finally {
-            setLoading(false);
+            // Simulate 2-second delay
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
         }
     };
 
@@ -44,10 +41,11 @@ const Attendance = ({ rollNumber }) => {
         <div className="attendance-wrapper">
             <h1>Attendance</h1>
 
-            {loading && <p className="loading">Loading attendance...</p>}
-            {error && <p className="error">{error}</p>}
-
-            {!loading && !error && (
+            {loading ? (
+                <div className="spinner-overlay">
+                    <div className="spinner" />
+                </div>
+            ) : (
                 <div className="table-responsive">
                     <table>
                         <thead>

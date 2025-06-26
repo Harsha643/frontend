@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../DashboardStyles/Classes.css';
 import Header from './Header'; // Adjust path if needed
 
@@ -15,9 +17,8 @@ const Classes = () => {
         subject: '',
         topic: '',
         date: '',
-        teacher:''
+        teacher: ''
     });
-    console.log("Staff Data:", staffdata);
 
     useEffect(() => {
         fetchClasses();
@@ -30,6 +31,7 @@ const Classes = () => {
             setClasses(data);
         } catch (error) {
             console.error('Error fetching classes:', error);
+            toast.error('Failed to fetch class data');
         }
     };
 
@@ -64,12 +66,13 @@ const Classes = () => {
             });
             if (res.ok) {
                 setClasses(prev => prev.filter(item => item._id !== id));
-                alert("Deleted successfully");
+                toast.success('Class deleted successfully');
             } else {
-                alert("Failed to delete");
+                toast.error('Failed to delete class');
             }
         } catch (error) {
             console.error('Delete error:', error);
+            toast.error('Error occurred while deleting');
         }
     };
 
@@ -92,12 +95,13 @@ const Classes = () => {
             if (res.ok) {
                 fetchClasses();
                 setShowModal(false);
-                alert(selectedClass ? "Updated successfully" : "Added successfully");
+                toast.success(selectedClass ? "Class updated successfully" : "Class added successfully");
             } else {
-                alert("Failed to save");
+                toast.error("Failed to save class");
             }
         } catch (error) {
             console.error("Save error:", error);
+            toast.error("Error occurred while saving");
         }
     };
 
@@ -110,39 +114,39 @@ const Classes = () => {
 
     return (
         <>
+            <ToastContainer position="top-right" autoClose={3000} />
+
             {/* {staffdata && <Header staffdata={staffdata} />} */}
 
             <button className="add-class-btn" onClick={openNewClassModal}>Add New Class</button>
             <div className="table-wrapper">
-            <table className="classes-table">
-                <thead>
-                    <tr>
-                        <th>S.No</th>
-                        <th>Class</th>
-                        <th>Subject</th>
-                        <th>Topic</th>
-                        <th>Date</th>
-                    
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {classes.map((classItem, index) => (
-                        <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{classItem.class}</td>
-                            <td>{classItem.subject}</td>
-                            <td>{classItem.topic}</td>
-                            <td>{new Date(classItem.date).toLocaleDateString()}</td>
-                           
-                            <td>
-                                <button onClick={() => handleEdit(classItem)}>Edit</button>
-                                <button onClick={() => handleDelete(classItem._id)}>Delete</button>
-                            </td>
+                <table className="classes-table">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Class</th>
+                            <th>Subject</th>
+                            <th>Topic</th>
+                            <th>Date</th>
+                            <th>Action</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {classes.map((classItem, index) => (
+                            <tr key={index}>
+                                <td>{index + 1}</td>
+                                <td>{classItem.class}</td>
+                                <td>{classItem.subject}</td>
+                                <td>{classItem.topic}</td>
+                                <td>{new Date(classItem.date).toLocaleDateString()}</td>
+                                <td>
+                                    <button onClick={() => handleEdit(classItem)}>Edit</button>
+                                    <button onClick={() => handleDelete(classItem._id)}>Delete</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div >
 
             {showModal && (

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../DashboardStyles/feedback.css';
 
 const Feedback = () => {
@@ -34,24 +36,27 @@ const Feedback = () => {
                 setStudentData(data);
             } catch (error) {
                 console.error('Error fetching students:', error);
+                toast.error('Failed to fetch students');
             }
         }
         fetchStudentsByClass();
     }, [selectedClass]);
-    console.log("studentData", studentData);
 
     const openFeedbackModal = (student = null) => {
         if (student) {
             setFormData({
                 studentName: student.studentName,
                 rollNumber: student.rollNumber,
-                presentClass: student.presentClass || selectedClass,
+                class: student.presentClass || selectedClass,
                 teacher: staffdata?.teacherName || '',
                 feedback: ''
             });
         } else {
             const selectedStudent = studentData.find(s => s.rollNumber === selectRollNumber);
-            if (!selectedStudent) return alert("Please select a valid student.");
+            if (!selectedStudent) {
+                toast.warning("Please select a valid student.");
+                return;
+            }
             setFormData({
                 studentName: selectedStudent.studentName,
                 rollNumber: selectedStudent.rollNumber,
@@ -62,25 +67,23 @@ const Feedback = () => {
         }
         setIsModalOpen(true);
     };
+
     async function fetchFeedback() {
         try {
             const response = await fetch('http://localhost:4000/staff/feedback');
             if (!response.ok) throw new Error("Failed to fetch feedback");
             const data = await response.json();
-            console.log("Feedback data:", data);
             setFeedback(data);
-            } catch (error) {
-                console.error('Error fetching feedback:', error);
-                }
-                }
-        
-        useEffect(()=>{
-            fetchFeedback();
-        },[])
+        } catch (error) {
+            console.error('Error fetching feedback:', error);
+            toast.error("Error fetching feedback data");
+        }
+    }
 
+    useEffect(() => {
+        fetchFeedback();
+    }, []);
 
-
-        console.log(feedback)
     const handleSubmitFeedback = async () => {
         try {
             const response = await fetch('http://localhost:4000/staff/feedback', {
@@ -90,19 +93,19 @@ const Feedback = () => {
             });
 
             if (!response.ok) throw new Error("Failed to submit feedback");
-            alert("Feedback submitted!");
+            toast.success("Feedback submitted successfully!");
             setIsModalOpen(false);
-            setFormData({ studentName: '', rollNumber: '', presentClass: '', teacher: '', feedback: '' });
+            setFormData({ studentName: '', rollNumber: '', class: '', teacher: '', feedback: '' });
+            fetchFeedback();
         } catch (err) {
             console.error("Feedback submit error:", err);
-            alert("Failed to submit feedback");
+            toast.error("Failed to submit feedback");
         }
     };
 
-    console.log("feedback", feedback);
-
     return (
         <div className="feedback-container">
+            <ToastContainer position="top-right" autoClose={3000} />
             <h1>Student Feedback by Class</h1>
 
             <div className="feedback-header">
@@ -124,33 +127,32 @@ const Feedback = () => {
 
                 <button onClick={() => openFeedbackModal(null)}>Add Feedback</button>
             </div>
-                    <div className="feedback-table-wrapper">
 
-            <table className="assignment-table" cellSpacing="0" cellPadding="5" border="1">
-                <thead>
-                    <tr>
-                        <th>S.No</th>
-                        <th>Roll Number</th>
-                        <th>Student Name</th>
-                        <th>Class</th>
-                        <th>Feedback</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    {feedback.map((item, index) => (
-                        <tr key={item._id || index}>
-                            <td>{index + 1}</td>
-                            <td>{item.rollNumber}</td>
-                            <td>{item.studentName}</td>
-                            <td>{item.class }</td>
-                            <td>{item.feedback}</td>
-
+            <div className="feedback-table-wrapper">
+                <table className="assignment-table" cellSpacing="0" cellPadding="5" border="1">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Roll Number</th>
+                            <th>Student Name</th>
+                            <th>Class</th>
+                            <th>Feedback</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-                </div>
+                    </thead>
+                    <tbody>
+                        {feedback.map((item, index) => (
+                            <tr key={item._id || index}>
+                                <td>{index + 1}</td>
+                                <td>{item.rollNumber}</td>
+                                <td>{item.studentName}</td>
+                                <td>{item.class}</td>
+                                <td>{item.feedback}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
             {isModalOpen && (
                 <div style={{
                     position: 'fixed',
@@ -172,7 +174,7 @@ const Feedback = () => {
 
                         <label>Roll Number:</label>
                         <input value={formData.rollNumber} readOnly /><br />
-                      
+
                         <label>Feedback:</label><br />
                         <textarea
                             value={formData.feedback}

@@ -1,24 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
+import { ToastContainer, toast } from 'react-toastify';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import '../DashboardStyles/Home.css'
+import 'react-toastify/dist/ReactToastify.css';
+import '../DashboardStyles/Home.css';
 
 const Home = () => {
     const [gallery, setGallery] = useState([]);
+    // const [image, setImage] = useState(null);
+    // const [description, setDescription] = useState('');
 
     useEffect(() => {
-        async function fetching() {
-            try {
-                const response = await fetch("http://localhost:4000/admin/gallery");
-                const data = await response.json();
-                setGallery(data);
-            } catch (error) {
-                console.error("Error fetching gallery:", error);
-            }
-        }
-        fetching();
+        fetchGallery();
     }, []);
+
+    const fetchGallery = async () => {
+        try {
+            const response = await fetch("http://localhost:4000/admin/gallery");
+            const data = await response.json();
+            setGallery(data);
+        } catch (error) {
+            console.error("Error fetching gallery:", error);
+            toast.error("Failed to load gallery");
+        }
+    };
+
+    
 
     const settings = {
         dots: true,
@@ -33,7 +41,12 @@ const Home = () => {
 
     return (
         <div className="home-container">
+            <ToastContainer position="top-right" autoClose={3000} />
             <h1 style={{ textAlign: "center", marginBottom: "20px" }}>Gallery</h1>
+
+    
+
+            {/* Gallery Carousel */}
             <div className="gallery-carousel">
                 <Slider {...settings}>
                     {gallery.map((item, index) => (
@@ -53,7 +66,6 @@ const Home = () => {
                         </div>
                     ))}
                 </Slider>
-                <p>add another items</p>
             </div>
         </div>
     );

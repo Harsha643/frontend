@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import "../DashboardStyles/notes.css";
 import { useLocation } from 'react-router-dom';
-const Notes = ({staffdata}) => {
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const Notes = ({ staffdata }) => {
     const [notes, setNotes] = useState([]);
     const [filteredNotes, setFilteredNotes] = useState([]);
     const [selectedNote, setSelectedNote] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [viewLink, setViewLink] = useState("");
     const [isEditing, setIsEditing] = useState(false);
-    const[Teacherdata, setTeacherdata] = useState( {});
+    const [Teacherdata, setTeacherdata] = useState({});
     const [selectedClass, setSelectedClass] = useState("");
-       const location = useLocation();
-        const staff = location.state?.staffdata;
+    const location = useLocation();
+    const staff = location.state?.staffdata;
 
     useEffect(() => {
         fetchNotes();
@@ -27,7 +30,7 @@ const Notes = ({staffdata}) => {
             const data = await response.json();
             setNotes(data);
         } catch (error) {
-            console.error("Failed to fetch notes:", error);
+            toast.error("Failed to fetch notes");
         }
     };
 
@@ -67,9 +70,10 @@ const Notes = ({staffdata}) => {
             });
             const updatedNotes = notes.filter(note => note._id !== id);
             setNotes(updatedNotes);
-            setFilteredNotes(updatedNotes.filter(note => note.classNumber== selectedClass));
+            setFilteredNotes(updatedNotes.filter(note => note.classNumber === selectedClass));
+            toast.success("Note deleted successfully");
         } catch (error) {
-            console.error("Failed to delete note:", error);
+            toast.error("Failed to delete note");
         }
     };
 
@@ -98,16 +102,18 @@ const Notes = ({staffdata}) => {
                 const updated = notes.map(note => note._id === result._id ? result : note);
                 setNotes(updated);
                 setFilteredNotes(updated.filter(note => note.classNumber.toString() === selectedClass));
+                toast.success("Note updated successfully");
             } else {
                 const newNotes = [...notes, result];
                 setNotes(newNotes);
-                setFilteredNotes(newNotes.filter(note => note.classNumber== selectedClass));
+                setFilteredNotes(newNotes.filter(note => note.classNumber === selectedClass));
+                toast.success("Note added successfully");
             }
 
             setShowModal(false);
             setSelectedNote(null);
         } catch (error) {
-            console.error("Failed to submit note:", error);
+            toast.error("Failed to submit note");
         }
     };
 
@@ -140,37 +146,37 @@ const Notes = ({staffdata}) => {
                 <p className="no-notes-msg">This class notes are not present</p>
             ) : (
                 <div className="notes-table-wrapper">
-                <table className="notes-table">
-                    <thead>
-                        <tr>
-                            <th>S.No</th>
-                            <th>Class</th>
-                            <th>Subject</th>
-                            <th>Title</th>
-                            <th>Link</th>
-                            <th>Teacher Name</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredNotes.map((note, index) => (
-                            <tr key={note._id}>
-                                <td>{index + 1}</td>
-                                <td>{note.classNumber}</td>
-                                <td>{note.subject}</td>
-                                <td>{note.title}</td>
-                                <td>
-                                    <button className="view-button" onClick={() => openViewModal(note.link)}>View</button>
-                                </td>
-                                <td>{note.teacherName}</td>
-                                <td>
-                                    <button className="edit-button" onClick={() => handleEdit(note)}>Edit</button>
-                                    <button className="delete-button" onClick={() => handleDelete(note._id)}>Delete</button>
-                                </td>
+                    <table className="notes-table">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Class</th>
+                                <th>Subject</th>
+                                <th>Title</th>
+                                <th>Link</th>
+                                <th>Teacher Name</th>
+                                <th>Actions</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {filteredNotes.map((note, index) => (
+                                <tr key={note._id}>
+                                    <td>{index + 1}</td>
+                                    <td>{note.classNumber}</td>
+                                    <td>{note.subject}</td>
+                                    <td>{note.title}</td>
+                                    <td>
+                                        <button className="view-button" onClick={() => openViewModal(note.link)}>View</button>
+                                    </td>
+                                    <td>{note.teacherName}</td>
+                                    <td>
+                                        <button className="edit-button" onClick={() => handleEdit(note)}>Edit</button>
+                                        <button className="delete-button" onClick={() => handleDelete(note._id)}>Delete</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             )}
 
@@ -215,6 +221,9 @@ const Notes = ({staffdata}) => {
                     </div>
                 </div>
             )}
+
+            {/* Toast container for notifications */}
+            <ToastContainer position="top-right" autoClose={3000} />
         </div>
     );
 };

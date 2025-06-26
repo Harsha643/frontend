@@ -22,6 +22,7 @@ const Dashboard = () => {
     }, [student]);
 
     const [currentPage, setCurrentPage] = useState('home');
+    console.log(studentdata)
 
     const renderPage = () => {
         switch (currentPage) {
@@ -32,7 +33,7 @@ const Dashboard = () => {
             case 'class':
                 return <Classes classData={studentdata.presentClass} />;
             case 'assignment':
-                return <Assignment classData={studentdata.presentClass} />;
+                return <Assignment classData={studentdata} />;
             case 'attendance':
                 return <Attendence rollNumber={studentdata.rollNumber} />;
             case 'timetable':
