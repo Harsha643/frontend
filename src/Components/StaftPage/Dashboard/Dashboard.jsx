@@ -8,6 +8,7 @@ import Timetable from './Timetable';
 import Assignment from './Assignment.jsx';
 import Feedback from './Feedback';
 import '../DashboardStyles/Dashboard.css';
+import Attendance from '../Dashboard/Attendance.jsx';
 // import modal from './modal';
 
 
@@ -32,7 +33,7 @@ const StaffDashboard = () => {
             case 'classes':
                 return <Classes staffdata={staffdata} /> || <h2>Classes Page</h2>;
             case 'attendance':
-                return <h2>Attendance Page</h2>;
+                return <Attendance staffdata={staffdata} /> ||<h2>Attendance Page</h2>;
             case 'feedback':
                 return <Feedback /> || <h2>Feedback Page</h2>;
             default:
@@ -69,6 +70,10 @@ const StaffDashboard = () => {
                     <button className="nav-button" onClick={() => setCurrentPage('assignment')}>
                         <span className="icon"><img src='/assignment.png'  width={"30px"}/></span>
                         <span>Assignments</span>
+                    </button>
+                     <button className="nav-button" onClick={() => setCurrentPage('attendance')}>
+                        <span className="icon"><img src='/attendence.png'  width={"30px"}/></span>
+                        <span>Attendance</span>
                     </button>
                   
                     <button className="nav-button" onClick={() => setCurrentPage('timetable')}>
